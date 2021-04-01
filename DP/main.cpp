@@ -19,17 +19,33 @@ long fib(long n) {
 long fibWithmemo(long n) {
     if (n == 0) return 0;
     vector<long> memo(n + 1, 0);
-    long helper(long n, vector<long>& memo);
+    long helper(long n, vector<long> &memo);
     return helper(n, memo);
 }
 
-long helper(long n, vector<long>& memo) {
-    if (n == 1 || n == 2) return 1;
+long helper(long n, vector<long> &memo) {
+    if (n == 0) return 0;
+    if (n == 1 | n == 2) {
+        return 1;
+    }
     if (memo[n] != 0) {
         return memo[n];
     }
     memo[n] = helper(n - 1, memo) + helper(n - 2, memo);
     return memo[n];
+}
+
+long helperDpTable(long n) {
+    if (n == 0) return 0;
+    if (n == 1 | n == 2) {
+        return 1;
+    }
+    vector<long> dp(n + 0, 0);
+    dp[1] = dp[2] = 1;
+    for (int i = 3; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
 }
 
 
@@ -52,8 +68,9 @@ long fibBest(long n) {
 
 
 int main() {
-    cout << fib(50) << endl;
-    cout << fibWithmemo(100) << endl;
+//    cout << fib(20) << endl;
+//    cout << fibWithmemo(100) << endl;
+    cout << helperDpTable(100) << endl;
     cout << fibBest(100) << endl;
     return 0;
 }
